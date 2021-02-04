@@ -1,0 +1,151 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+
+import 'models/orders.dart';
+import 'models/status.dart';
+import 'models/symbols.dart';
+import 'models/ticker.dart';
+
+///Create a instant of BitkubServices to access api
+///
+///Only support public api for now
+///
+///Ex.
+///     var bitkubClient = BitkubClient();
+class BitkubClient {
+  ///Base url of the API
+  static const BASE_URL = 'https://api.bitkub.com/api';
+
+  ///Get endpoint status.
+  ///When status is not ok, it is highly recommended to wait until the status changes back to ok.
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Return [BKStatus] object.
+  @Deprecated('Not working but existed in doc.')
+  Future<BkStatus> getStatus() async {
+    const ENDPOINT = '/status';
+
+    final finalUri = BASE_URL + ENDPOINT;
+
+    final response = await _dioUrlGet(finalUri);
+
+    if (response != null) return BkStatus.fromJson(response);
+    return null;
+    //return BkStatus.fromJson(await _dioUriGet(finalUri));
+  }
+
+  ///Get server timestamp.
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Return [DateTime] object.
+  @Deprecated('Not working but existed in doc.')
+  Future<DateTime> getServerTimestamp() async {
+    const ENDPOINT = '/servertime';
+
+    final finalUri = BASE_URL + ENDPOINT;
+    final response = await _dioUrlGet(finalUri);
+
+    if (response != null)
+      return DateTime.fromMillisecondsSinceEpoch(response * 1000);
+    return null;
+  }
+
+  ///Get ticker information
+  ///If provided [symbols] will return List of BkTicker ONLY with that [symbols] element.
+  ///
+  ///Ex.
+  ///   var tickers = bitkubClient.getTickers(BkSymbols.THB_BTC);
+  Future<BkTickerList> getTickers({BkSymbols symbol}) async {
+    const ENDPOINT = '/market/ticker';
+    final queryString = symbol == null ? '' : '?sym=$symbol';
+
+    final finalUri = BASE_URL + ENDPOINT + queryString;
+
+    final response = await _dioUrlGet(finalUri);
+
+    if (response != null) return BkTickerList.fromJson(response);
+    return null;
+  }
+
+  ///Get list of open orders containing only asks for a specific [symbols] and query limit of [limit]
+  ///Default [limit] is 30
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Ex.
+  ///   var openOrders = bitkubClient.getSellOrders(BkSymbols.THB_BTC);
+  @Deprecated('Not working but existed in doc')
+  Future<List<BkOrder>> getSellOrders(BkSymbols symbol,
+      {int limit = 30}) async {
+    const ENDPOINT = '/market/asks';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringLimit = '&lmt=$limit';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
+
+    final response = await _dioUrlGet(finalUrl);
+    if (response != null)
+      return json
+          .decode(response)['result']
+          .map((e) => BkOrder.fromList(e))
+          .toList();
+    return null;
+  }
+
+  ///Get list of open orders containing only bids for a specific [symbols] and query limit of [limit]
+  ///Default [limit] is 30
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Ex.
+  ///   var openOrders = bitkubClient.getSellOrders(BkSymbols.THB_BTC);
+  @Deprecated('Not working but existed in doc')
+  Future<List<BkOrder>> getBuyOrders(BkSymbols symbol, {int limit = 30}) async {
+    const ENDPOINT = '/market/bids';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringLimit = '&lmt=$limit';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
+
+    final response = await _dioUrlGet(finalUrl);
+    if (response != null)
+      return json
+          .decode(response)['result']
+          .map((e) => BkOrder.fromList(e))
+          .toList();
+    return null;
+  }
+
+  ///Get list of open orders containing bids and asks for a specific [symbols] and query limit of [limit]
+  ///Default [limit] is 30
+  ///
+  ///Ex.
+  ///   var openOrders = bitkubClient.getOpenOrders(BkSymbols.THB_BTC);
+  Future<BkOpenOrders> getOpenOrders(BkSymbols symbol, {int limit = 30}) async {
+    const ENDPOINT = '/market/books';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringLimit = '&lmt=$limit';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
+
+    final response = await _dioUrlGet(finalUrl);
+    if (response != null) return BkOpenOrders.fromJson(response);
+    return null;
+  }
+}
+
+Future<dynamic> _dioUrlGet(String uri, {Map<String, dynamic> headers}) async {
+  final dio = Dio(BaseOptions(responseType: ResponseType.bytes));
+
+  if (headers != null) dio.options.headers = headers;
+
+  try {
+    final response = await dio.get(uri);
+    return utf8.decode(response.data);
+  } catch (error) {
+    print(error);
+
+    return null;
+  } finally {
+    dio.close();
+  }
+}
