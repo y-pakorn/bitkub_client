@@ -28,7 +28,7 @@ class BitkubClient {
 
     final finalUri = BASE_URL + ENDPOINT;
 
-    final response = await _dioUrlGet(finalUri);
+    final response = await _httpWrapper(finalUri);
 
     if (response != null) return BkStatus.fromJson(response);
     return null;
@@ -44,7 +44,7 @@ class BitkubClient {
     const ENDPOINT = '/servertime';
 
     final finalUri = BASE_URL + ENDPOINT;
-    final response = await _dioUrlGet(finalUri);
+    final response = await _httpWrapper(finalUri);
 
     if (response != null) {
       return DateTime.fromMillisecondsSinceEpoch(response * 1000);
@@ -63,7 +63,7 @@ class BitkubClient {
 
     final finalUri = BASE_URL + ENDPOINT + queryString;
 
-    final response = await _dioUrlGet(finalUri);
+    final response = await _httpWrapper(finalUri);
 
     if (response != null) return BkTickerList.fromJson(response);
     return null;
@@ -84,7 +84,7 @@ class BitkubClient {
 
     final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
 
-    final response = await _dioUrlGet(finalUrl);
+    final response = await _httpWrapper(finalUrl);
     if (response != null) {
       return json
           .decode(response)['result']
@@ -108,7 +108,7 @@ class BitkubClient {
 
     final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
 
-    final response = await _dioUrlGet(finalUrl);
+    final response = await _httpWrapper(finalUrl);
     if (response != null) {
       return json
           .decode(response)['result']
@@ -130,13 +130,13 @@ class BitkubClient {
 
     final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
 
-    final response = await _dioUrlGet(finalUrl);
+    final response = await _httpWrapper(finalUrl);
     if (response != null) return BkOpenOrders.fromJson(response);
     return null;
   }
 }
 
-Future<dynamic> _dioUrlGet(String url) async {
+Future<dynamic> _httpWrapper(String url) async {
   final httpClient = http.Client();
 
   try {
