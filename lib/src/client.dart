@@ -38,7 +38,7 @@ class BitkubClient {
   ///Get server timestamp.
   /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
-  ///Return [DateTime] object.
+  ///Return DateTime object.
   @Deprecated('Not working but existed in doc.')
   Future<DateTime> getServerTimestamp() async {
     const ENDPOINT = '/servertime';

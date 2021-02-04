@@ -1,5 +1,7 @@
 import '../helper.dart';
 
+///Enums for Bitkub symbol sign
+///Ex. THB_BTC indicates THB <-> BTC
 enum BkSymbols {
   THB_ABT,
   THB_ADA,
@@ -39,6 +41,7 @@ enum BkSymbols {
   THB_ZRX,
 }
 
+///Extensions on BkSymbols
 extension BkSymbolsExtension on BkSymbols {
   ///Short symbol name
   ///Ex. BTC
@@ -49,6 +52,7 @@ extension BkSymbolsExtension on BkSymbols {
   String get symbolString => bkSymbolsValue.reverse[this];
 }
 
+///@nodoc
 const bkSymbolsValue = EnumValues({
   'THB_ABT': BkSymbols.THB_ABT,
   'THB_ADA': BkSymbols.THB_ADA,
