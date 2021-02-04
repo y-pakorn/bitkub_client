@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -10,7 +9,7 @@ import 'models/ticker.dart';
 
 ///Create a instant of BitkubServices to access api
 ///
-///Only support public api for now
+///Only support public, non-secure (no authentication) API for now
 ///
 ///Ex.
 ///     var bitkubClient = BitkubClient();
@@ -22,7 +21,7 @@ class BitkubClient {
   ///When status is not ok, it is highly recommended to wait until the status changes back to ok.
   /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
-  ///Return [BKStatus] object.
+  ///Return BKStatus object.
   @Deprecated('Not working but existed in doc.')
   Future<BkStatus> getStatus() async {
     const ENDPOINT = '/status';
@@ -54,7 +53,7 @@ class BitkubClient {
   }
 
   ///Get ticker information
-  ///If provided [symbols] will return List of BkTicker ONLY with that [symbols] element.
+  ///If provided [symbol] will return List of BkTicker ONLY with that [symbol] element.
   ///
   ///Ex.
   ///   var tickers = bitkubClient.getTickers(BkSymbols.THB_BTC);
@@ -70,7 +69,7 @@ class BitkubClient {
     return null;
   }
 
-  ///Get list of open orders containing only asks for a specific [symbols] and query limit of [limit]
+  ///Get list of open orders containing only asks for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
   /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
@@ -86,15 +85,16 @@ class BitkubClient {
     final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
 
     final response = await _dioUrlGet(finalUrl);
-    if (response != null)
+    if (response != null) {
       return json
           .decode(response)['result']
           .map((e) => BkOrder.fromList(e))
           .toList();
+    }
     return null;
   }
 
-  ///Get list of open orders containing only bids for a specific [symbols] and query limit of [limit]
+  ///Get list of open orders containing only bids for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
   /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
@@ -118,7 +118,7 @@ class BitkubClient {
     return null;
   }
 
-  ///Get list of open orders containing bids and asks for a specific [symbols] and query limit of [limit]
+  ///Get list of open orders containing bids and asks for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
   ///
   ///Ex.
