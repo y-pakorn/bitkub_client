@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 ///An OpenOrders object that contains bids and asks of specific BkSymbols
 ///Used in BitkubClient

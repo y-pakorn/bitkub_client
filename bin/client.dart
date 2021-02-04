@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 import 'models/orders.dart';
 import 'models/status.dart';
@@ -46,8 +47,9 @@ class BitkubClient {
     final finalUri = BASE_URL + ENDPOINT;
     final response = await _dioUrlGet(finalUri);
 
-    if (response != null)
+    if (response != null) {
       return DateTime.fromMillisecondsSinceEpoch(response * 1000);
+    }
     return null;
   }
 
@@ -107,11 +109,12 @@ class BitkubClient {
     final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
 
     final response = await _dioUrlGet(finalUrl);
-    if (response != null)
+    if (response != null) {
       return json
           .decode(response)['result']
           .map((e) => BkOrder.fromList(e))
           .toList();
+    }
     return null;
   }
 
@@ -133,19 +136,17 @@ class BitkubClient {
   }
 }
 
-Future<dynamic> _dioUrlGet(String uri, {Map<String, dynamic> headers}) async {
-  final dio = Dio(BaseOptions(responseType: ResponseType.bytes));
-
-  if (headers != null) dio.options.headers = headers;
+Future<dynamic> _dioUrlGet(String url) async {
+  final httpClient = http.Client();
 
   try {
-    final response = await dio.get(uri);
-    return utf8.decode(response.data);
+    final response = await httpClient.get(url);
+    return utf8.decode(response.bodyBytes);
   } catch (error) {
     print(error);
 
     return null;
   } finally {
-    dio.close();
+    httpClient.close();
   }
 }

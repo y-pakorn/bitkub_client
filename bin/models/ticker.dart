@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:meta/meta.dart';
 
-import 'package:cryptag/services/bitkub_services/models/symbols.dart';
-import 'package:flutter/foundation.dart';
+import './symbols.dart';
 
 ///A BkTickerList object that store list of BkTicker
 ///Used in BitkubClient

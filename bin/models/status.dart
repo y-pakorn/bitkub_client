@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:cryptag/helper.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
+
+import '../helper.dart';
 
 ///Bitkub endpoints status object
 ///contains [secureEndpoint] and [nonSecureEndpoint] status.
@@ -44,22 +45,22 @@ class BkEndpointStatus {
   final String message;
 
   ///Return `true` if [status] is 'Ok'
-  bool get isOk => status == "Ok";
+  bool get isOk => status == 'Ok';
 
   //factory BkEndpointStatus._fromJson(String str) =>
   //BkEndpointStatus._fromMap(json.decode(str));
 
   factory BkEndpointStatus._fromMap(Map<String, dynamic> json) =>
       BkEndpointStatus(
-        endpoint: _bkEndpointMap.map[json["name"]],
-        status: json["status"],
-        message: json["message"],
+        endpoint: _bkEndpointMap.map[json['name']],
+        status: json['status'],
+        message: json['message'],
       );
 }
 
 enum BkEndpoint { NON_SECURE, SECURE }
 
 const _bkEndpointMap = EnumValues({
-  "Non-secure endpoints": BkEndpoint.NON_SECURE,
-  "Secure endpoints": BkEndpoint.SECURE,
+  'Non-secure endpoints': BkEndpoint.NON_SECURE,
+  'Secure endpoints': BkEndpoint.SECURE,
 });
