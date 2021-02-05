@@ -53,6 +53,9 @@ class BkTicker {
     @required this.high24Hr,
     @required this.low24Hr,
     @required this.isFrozen,
+    this.highestBidVolume,
+    this.lowestAskVolume,
+    this.streamName,
   });
 
   ///Symbol of [this]
@@ -78,7 +81,7 @@ class BkTicker {
   ///Ex. 2.81
   final double percentChange;
 
-  ///Currency value change when open/close in yesterday in THB, may be negative
+  ///Currency value change in 24 hours in THB, may be negative
   ///Ex. -1499
   final double change;
 
@@ -108,6 +111,23 @@ class BkTicker {
   ///Ex. false
   final bool isFrozen;
 
+  ///Volume of the [highestBid] in currency
+  /// ## Only available in BitkubSocketClient.connectToTickerStream
+  ///
+  ///Ex. 0.19895534
+  final double highestBidVolume;
+
+  ///Volume of the [lowestAsk] in currency
+  /// ## Only available in BitkubSocketClient.connectToTickerStream
+  ///
+  ///Ex. 0.20895534
+  final double lowestAskVolume;
+
+  ///Parsed stream name in string
+  /// ## Only available in BitkubSocketClient.connectToTickerStream
+  ///Ex. market.trade.thb_doge
+  final String streamName;
+
   factory BkTicker._fromMap(String key, Map<String, dynamic> json) => BkTicker(
         symbol: bkSymbolsValue.map[key],
         id: json['id'],
@@ -123,5 +143,29 @@ class BkTicker {
         change: (json['change']).toDouble(),
         prevOpen: (json['prevOpen']).toDouble(),
         prevClose: (json['prevOpen']).toDouble(),
+      );
+
+  factory BkTicker.fromStreamJson(String str) =>
+      BkTicker._fromStreamMap(json.decode(str));
+
+  factory BkTicker._fromStreamMap(Map<String, dynamic> json) => BkTicker(
+        symbol: bkSymbolsValue
+            .map[json['stream'].toString().split('.').last.toUpperCase()],
+        id: json['id'],
+        low24Hr: (json['low24hr'])?.toDouble(),
+        high24Hr: (json['high24hr'])?.toDouble(),
+        lastPrice: (json['last'])?.toDouble(),
+        lowestAsk: (json['lowestAsk'])?.toDouble(),
+        highestBid: (json['highestBid'])?.toDouble(),
+        percentChange: (json['percentChange'])?.toDouble(),
+        allBaseVolume: (json['baseVolume'])?.toDouble(),
+        allQuoteVolume: (json['quoteVolume'])?.toDouble(),
+        isFrozen: json['isFrozen'] == 1 ? true : false,
+        change: (json['change'])?.toDouble(),
+        prevOpen: (json['prevOpen'])?.toDouble(),
+        prevClose: (json['prevOpen'])?.toDouble(),
+        lowestAskVolume: (json['lowestAskSize'])?.toDouble(),
+        highestBidVolume: (json['highestBidSize'])?.toDouble(),
+        streamName: json['stream'],
       );
 }
