@@ -8,7 +8,7 @@ import 'models/status.dart';
 import 'models/symbols.dart';
 import 'models/ticker.dart';
 
-///Create a instant of BitkubServices to access api
+///Create a instant of BitkubClient to access Bitkub's API
 ///
 ///Only support public, non-secure (no authentication) API for now
 ///
