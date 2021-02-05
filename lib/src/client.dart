@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'models/depth.dart';
 import 'models/orders.dart';
 import 'models/status.dart';
 import 'models/symbols.dart';
@@ -38,7 +39,7 @@ class BitkubClient {
   ///Get server timestamp.
   /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
-  ///Return [DateTime] object.
+  ///Return DateTime object.
   @Deprecated('Not working but existed in doc.')
   Future<DateTime> getServerTimestamp() async {
     const ENDPOINT = '/servertime';
@@ -134,6 +135,24 @@ class BitkubClient {
     if (response != null) return BkOpenOrders.fromJson(response);
     return null;
   }
+
+  ///Get depth information for a specific [symbol] with size [size].
+  ///Usually used in depth chart or quick skim through the orders
+  ///Default [size] is 30
+  ///
+  ///Ex.
+  ///   var depth = bitkubClient.getDepthInformation(BkSymbols.THB_BTC);
+  Future<BkDepth> getDepthInformation(BkSymbols symbol, {int size = 30}) async {
+    const ENDPOINT = '/market/depth';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringSize = '&lmt=$size';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringSize;
+
+    final response = await _httpWrapper(finalUrl);
+    if (response != null) return BkDepth.fromJson(response);
+    return null;
+  }
 }
 
 Future<dynamic> _httpWrapper(String url) async {
@@ -143,9 +162,7 @@ Future<dynamic> _httpWrapper(String url) async {
     final response = await httpClient.get(url);
     return utf8.decode(response.bodyBytes);
   } catch (error) {
-    print(error);
-
-    return null;
+    rethrow;
   } finally {
     httpClient.close();
   }

@@ -6,7 +6,10 @@ import './symbols.dart';
 ///A BkTickerList object that store list of BkTicker
 ///Used in BitkubClient
 class BkTickerList {
-  const BkTickerList(this.tickerList);
+  const BkTickerList(this.tickerList, {this.error});
+
+  ///Error code when initiated
+  final int error;
 
   ///List of ticker, might be empty
   final List<BkTicker> tickerList;
@@ -15,13 +18,21 @@ class BkTickerList {
   BkTicker getSpecificTicker(BkSymbols symbol) =>
       tickerList.firstWhere((e) => e.symbol == symbol);
 
+  ///Return true if has no error
+  bool get isOk => error == null || error != 0;
+
   factory BkTickerList.fromJson(String str) =>
       BkTickerList._fromMap(json.decode(str));
 
-  factory BkTickerList._fromMap(Map<String, dynamic> json) =>
-      BkTickerList(json.entries
-          .map((entries) => BkTicker._fromMap(entries.key, entries.value))
-          .toList());
+  factory BkTickerList._fromMap(Map<String, dynamic> json) {
+    return BkTickerList(
+      json.entries
+          .where((entry) => entry.key != 'error')
+          .map((entry) => BkTicker._fromMap(entry.key, entry.value))
+          .toList(),
+      error: json['error'],
+    );
+  }
 }
 
 ///A BkTicker object that contains various ticker information
