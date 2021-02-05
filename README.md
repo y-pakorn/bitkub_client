@@ -21,6 +21,7 @@
 ## Documentation
 
 Documentation of Bitkub Client for Dart can be found [here](https://pub.dev/documentation/bitkub_client/latest/)
+
 Official Documentation of Bikub public API can be found [here](https://github.com/bitkub/bitkub-official-api-docs)
 
 ## Usage
@@ -61,6 +62,8 @@ tradeStream.listen((matchedOrder) {
 });
 ```
 ## Contribution
+
+Before creating a new issues please read the official Bitkub API first for Breaking Changes.
 
 Feel free to contribute and shot the pull requests!
 
