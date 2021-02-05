@@ -5,7 +5,7 @@
   <p align="center">
     <a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
     <a href="https://github.com/y-pakorn/bitkub_client/issues"><img alt="Actions" src="https://img.shields.io/github/issues/y-pakorn/bitkub_client"></a>
-    <a href="https://github.com/y-pakorn/cutimetable-api/pulls"><img alt="Doc" src="https://img.shields.io/pub/v/bitkub_client"></a>
+    <a href="https://pub.dev/packages/bitkub_client"><img alt="Doc" src="https://img.shields.io/pub/v/bitkub_client"></a>
   </p>
 </p>
 
