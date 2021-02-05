@@ -1,4 +1,4 @@
-## 0.2.1
+## 0.2.2
 - Add BitkubSocketClient
 - Refactor some code
 - Add more documentation text

@@ -1,4 +1,4 @@
-import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import './models/symbols.dart';
 import './models/matched_order.dart';
@@ -28,7 +28,7 @@ class BitkubSocketClient {
     final finalUrl = BASE_URL + ENDPOINT;
     print(finalUrl);
 
-    final channel = IOWebSocketChannel.connect(Uri.parse(finalUrl));
+    final channel = WebSocketChannel.connect(Uri.parse(finalUrl));
     return channel.stream.map((e) => BkMatchedOrder.fromJson(e));
   }
 
@@ -46,7 +46,7 @@ class BitkubSocketClient {
     final finalUrl = BASE_URL + ENDPOINT;
     print(finalUrl);
 
-    final channel = IOWebSocketChannel.connect(Uri.parse(finalUrl));
+    final channel = WebSocketChannel.connect(Uri.parse(finalUrl));
     return channel.stream.map((e) => BkTicker.fromStreamJson(e));
   }
 }
