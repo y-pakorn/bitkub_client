@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'models/depth.dart';
 import 'models/orders.dart';
 import 'models/status.dart';
 import 'models/symbols.dart';
@@ -132,6 +133,24 @@ class BitkubClient {
 
     final response = await _httpWrapper(finalUrl);
     if (response != null) return BkOpenOrders.fromJson(response);
+    return null;
+  }
+
+  ///Get depth information for a specific [symbol] with size [size].
+  ///Usually used in depth chart or quick skim through the orders
+  ///Default [size] is 30
+  ///
+  ///Ex.
+  ///   var depth = bitkubClient.getDepthInformation(BkSymbols.THB_BTC);
+  Future<BkDepth> getDepthInformation(BkSymbols symbol, {int size = 30}) async {
+    const ENDPOINT = '/market/depth';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringSize = '&lmt=$size';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringSize;
+
+    final response = await _httpWrapper(finalUrl);
+    if (response != null) return BkDepth.fromJson(response);
     return null;
   }
 }

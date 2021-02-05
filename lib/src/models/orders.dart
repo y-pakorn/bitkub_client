@@ -27,7 +27,7 @@ class BkOpenOrders {
       BkOpenOrders._fromMap(json.decode(str));
 
   factory BkOpenOrders._fromMap(Map<String, dynamic> json) => BkOpenOrders(
-        error: json['errors'],
+        error: json['error'],
         bids: (json['result']['bids'] as List<dynamic>)
             .map((e) => BkOrder.fromList(e))
             .toList(),
