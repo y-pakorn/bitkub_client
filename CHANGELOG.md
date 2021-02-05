@@ -1,3 +1,6 @@
+## 0.2.3
+- dependency bug fixes
+
 ## 0.2.2
 - Add BitkubSocketClient
 - Refactor some code
