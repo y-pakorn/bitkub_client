@@ -1,4 +1,9 @@
-# 0.1.1
+## 0.1.2
+
+- Add BkDepth
+- Add more documentation text
+
+## 0.1.1
 
 - Update Readme
 - Prettfy some code
