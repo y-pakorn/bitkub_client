@@ -8,4 +8,7 @@ build/
 # Directory created by dartdoc
 doc/api/
 
+# Test files
+bin/test.dart
+
 .DS_Store

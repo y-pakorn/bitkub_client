@@ -1,3 +1,9 @@
+## 0.2.0
+- Add BitkubSocketClient
+- Refactor some code
+- Add more documentation text
+- Add examples
+
 ## 0.1.2
 
 - Add BkDepth
