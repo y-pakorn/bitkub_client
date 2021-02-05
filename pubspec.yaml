@@ -1,6 +1,6 @@
 name: bitkub_client
 description: A Dart client for Bitkub public API.
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/y-pakorn/bitkub_client
 
 environment:
