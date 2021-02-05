@@ -143,9 +143,7 @@ Future<dynamic> _httpWrapper(String url) async {
     final response = await httpClient.get(url);
     return utf8.decode(response.bodyBytes);
   } catch (error) {
-    print(error);
-
-    return null;
+    rethrow;
   } finally {
     httpClient.close();
   }

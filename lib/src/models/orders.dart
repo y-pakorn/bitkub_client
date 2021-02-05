@@ -11,7 +11,7 @@ class BkOpenOrders {
     @required this.asks,
   }) : assert(bids != null && asks != null);
 
-  ///Number of errors in when initiated
+  ///Error code when initiated
   final int error;
 
   ///List of bids
@@ -19,6 +19,9 @@ class BkOpenOrders {
 
   ///List of asks
   final List<BkOrder> asks;
+
+  ///Return true if has no error
+  bool get isOk => error == null || error != 0;
 
   factory BkOpenOrders.fromJson(String str) =>
       BkOpenOrders._fromMap(json.decode(str));
