@@ -1,6 +1,69 @@
+import 'dart:convert';
+
 import '../helper.dart';
 
+import 'package:meta/meta.dart';
+
+///A [BkSymbolList] object that store list of [BkSymbolInfo]
+///Used in [BitkubClient]
+class BkSymbolList {
+  const BkSymbolList({
+    this.error,
+    @required this.symbols,
+  }) : assert(symbols != null);
+
+  ///Error code when initiated
+  final int error;
+
+  ///List of [BkSymbolInfo] [this] contains
+  final List<BkSymbolInfo> symbols;
+
+  ///Return true if has no error
+  bool get isOk => error == null || error != 0;
+
+  factory BkSymbolList.fromJson(String str) =>
+      BkSymbolList._fromMap(json.decode(str));
+
+  factory BkSymbolList._fromMap(Map<String, dynamic> json) => BkSymbolList(
+        error: json['error'],
+        symbols: (json['result'] as List<dynamic>)
+            .map((e) => BkSymbolInfo._fromMap(e))
+            .toList()
+              ..removeWhere((e) => e == null),
+      );
+}
+
+///A BkSymbolInfo object that contains [BkSymbols] information
+///Used in [BkSymbolList]
+class BkSymbolInfo {
+  const BkSymbolInfo({
+    @required this.id,
+    @required this.symbol,
+    @required this.info,
+  });
+
+  ///Numerial id
+  final int id;
+
+  ///Symbol of [this]
+  ///Ex. BkSymbols.THB_BTC
+  final BkSymbols symbol;
+
+  ///Additional Information of [this]
+  ///Usally contain whats it's [symbol] fullname is, and what it's trade for
+  ///Ex. Thai Baht to Ethereum
+  final String info;
+
+  factory BkSymbolInfo._fromMap(Map<String, dynamic> json) => BkSymbolInfo(
+        id: json['id'],
+        symbol: bkSymbolsValue.map[json['symbol']],
+        info: json['info'],
+      );
+}
+
 ///Enums for Bitkub symbol sign
+///Used in almost all of BitkubClient and BitkubSocketClient api
+///
 ///Ex. THB_BTC indicates THB <-> BTC
 enum BkSymbols {
   THB_ABT,

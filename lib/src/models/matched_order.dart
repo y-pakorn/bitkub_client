@@ -4,6 +4,8 @@ import './symbols.dart';
 
 import 'package:meta/meta.dart';
 
+import 'type.dart';
+
 ///A MatchedOrder object that contains various inforation about matched order
 ///Used in BitkubSocketClient
 class BkMatchedOrder {
@@ -50,10 +52,9 @@ class BkMatchedOrder {
 
   //final Map<String, dynamic> rawJson;
 
-  ///Get order type of [this], can be BkMatchedOrderType.BUY or BkMatchedOrderType.SELL
-  BkMatchedOrderType get orderType => transactionId.contains('BUY')
-      ? BkMatchedOrderType.BUY
-      : BkMatchedOrderType.SELL;
+  ///Get order type of [this], can be BkType.BUY or BkType.SELL
+  BkType get orderType =>
+      transactionId.contains('BUY') ? BkType.BUY : BkType.SELL;
 
   factory BkMatchedOrder.fromJson(String str) =>
       BkMatchedOrder._fromMap(json.decode(str));
@@ -69,22 +70,4 @@ class BkMatchedOrder {
         transactionId: json['txn'],
         //rawJson: json,
       );
-}
-
-///Enums to indicate whether the matched order is buy or sell order
-///Used in BkMatchedOrder
-enum BkMatchedOrderType { BUY, SELL }
-
-///Extentions on BkMatchedOrder
-extension BkMatchedOrderTypeExtension on BkMatchedOrderType {
-  String get string {
-    switch (this) {
-      case BkMatchedOrderType.BUY:
-        return 'BUY';
-      case BkMatchedOrderType.SELL:
-        return 'SELL';
-      default:
-        return '';
-    }
-  }
 }

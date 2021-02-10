@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../bitkub_client.dart';
 import 'models/depth.dart';
 import 'models/orders.dart';
 import 'models/status.dart';
@@ -50,6 +51,43 @@ class BitkubClient {
     if (response != null) {
       return DateTime.fromMillisecondsSinceEpoch(response * 1000);
     }
+    return null;
+  }
+
+  ///Get all available symbols.
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Ex.
+  ///   var symbols = bitkubClient.getAllSymbols();
+  @Deprecated('Not working but existed in doc.')
+  Future<BkSymbolList> getAllSymbols() async {
+    const ENDPOINT = '/market/symbols';
+
+    final finalUri = BASE_URL + ENDPOINT;
+    final response = await _httpWrapper(finalUri);
+
+    if (response != null) {
+      return BkSymbolList.fromJson(response);
+    }
+    return null;
+  }
+
+  ///Get list of trades history for a specific [symbol] and query limit of [limit]
+  ///Default [limit] is 30
+  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
+  ///
+  ///Ex.
+  ///   var openOrders = bitkubClient.getTrades(BkSymbols.THB_BTC);
+  @Deprecated('Not working but existed in doc.')
+  Future<BkTradeList> getTrades(BkSymbols symbol, {int limit = 30}) async {
+    const ENDPOINT = '/market/trades';
+    final queryStringSymbol = '?sym=${symbol.symbolString}';
+    final queryStringLimit = '&lmt=$limit';
+
+    final finalUrl = BASE_URL + ENDPOINT + queryStringSymbol + queryStringLimit;
+
+    final response = await _httpWrapper(finalUrl);
+    if (response != null) return BkTradeList.fromJson(response);
     return null;
   }
 
