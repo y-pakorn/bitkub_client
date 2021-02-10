@@ -51,6 +51,126 @@ extension BkSymbolsExtension on BkSymbols {
   ///Symbol string
   ///Ex. THB_ABT
   String get symbolString => bkSymbolsValue.reverse[this];
+
+  ///Full symbol name
+  ///Ex. Ethereum
+  String get fullName {
+    switch (this) {
+      case BkSymbols.THB_ABT:
+        return 'Arcblock';
+        break;
+      case BkSymbols.THB_ADA:
+        return 'Cardano';
+        break;
+      case BkSymbols.THB_BAND:
+        return 'Band Protocol';
+        break;
+      case BkSymbols.THB_BAT:
+        return 'Basic Attention Token';
+        break;
+      case BkSymbols.THB_BCH:
+        return 'Bitcoin Cash';
+        break;
+      case BkSymbols.THB_BNB:
+        return 'Binance Coin';
+        break;
+      case BkSymbols.THB_BSV:
+        return 'Bitcoin SV';
+        break;
+      case BkSymbols.THB_BTC:
+        return 'Bitcoin';
+        break;
+      case BkSymbols.THB_CVC:
+        return 'Civic';
+        break;
+      case BkSymbols.THB_DAI:
+        return 'Dai';
+        break;
+      case BkSymbols.THB_DOGE:
+        return 'Dogecoin';
+        break;
+      case BkSymbols.THB_DOT:
+        return 'Polkadot';
+        break;
+      case BkSymbols.THB_ETH:
+        return 'Ethereum';
+        break;
+      case BkSymbols.THB_EVX:
+        return 'Everex';
+        break;
+      case BkSymbols.THB_GNT:
+        return 'Golem Network Token';
+        break;
+      case BkSymbols.THB_INF:
+        return 'Infinitus';
+        break;
+      case BkSymbols.THB_IOST:
+        return 'IOST';
+        break;
+      case BkSymbols.THB_JFIN:
+        return 'JFIN';
+        break;
+      case BkSymbols.THB_KNC:
+        return 'Kyber Network';
+        break;
+      case BkSymbols.THB_KSM:
+        return 'Kusama';
+        break;
+      case BkSymbols.THB_LINK:
+        return 'Chainlink';
+        break;
+      case BkSymbols.THB_LTC:
+        return 'Litecoin';
+        break;
+      case BkSymbols.THB_MANA:
+        return 'Decentraland';
+        break;
+      case BkSymbols.THB_NEAR:
+        return 'NEAR Protocol';
+        break;
+      case BkSymbols.THB_OMG:
+        return 'OMG Network';
+        break;
+      case BkSymbols.THB_POW:
+        return 'EOS Pow Coin';
+        break;
+      case BkSymbols.THB_RDN:
+        return 'Raiden Network Token';
+        break;
+      case BkSymbols.THB_SIX:
+        return 'SIX';
+        break;
+      case BkSymbols.THB_SCRT:
+        return 'Secret';
+        break;
+      case BkSymbols.THB_SNT:
+        return 'Status';
+        break;
+      case BkSymbols.THB_USDC:
+        return 'USD Coin';
+        break;
+      case BkSymbols.THB_USDT:
+        return 'Tether USD';
+        break;
+      case BkSymbols.THB_WAN:
+        return 'Wanchain';
+        break;
+      case BkSymbols.THB_XLM:
+        return 'Stella';
+        break;
+      case BkSymbols.THB_XRP:
+        return 'XRP';
+        break;
+      case BkSymbols.THB_ZIL:
+        return 'Zilliqa';
+        break;
+      case BkSymbols.THB_ZRX:
+        return '0x';
+        break;
+      default:
+        return name;
+    }
+  }
 }
 
 ///@nodoc

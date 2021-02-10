@@ -29,7 +29,8 @@ class BkTickerList {
       json.entries
           .where((entry) => entry.key != 'error')
           .map((entry) => BkTicker._fromMap(entry.key, entry.value))
-          .toList(),
+          .toList()
+            ..removeWhere((e) => e == null),
       error: json['error'],
     );
   }
