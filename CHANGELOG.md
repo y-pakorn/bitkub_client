@@ -1,4 +1,4 @@
-## 0.2.4
+## 0.2.5
 
 - Add SCRT token
 - Add full name property on BkSymbol
