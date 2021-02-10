@@ -9,15 +9,6 @@
   </p>
 </p>
 
-
-## Todos (In orders)
-
-- [x] Non-secure endpoints
-- [x] WebSocket APIs as streams
-- [x] Full examples
-- [ ] Migrate to Null-safety
-- [ ] Secure endpoints using authentication
-
 ## Documentation
 
 Documentation of Bitkub Client for Dart can be found [here](https://pub.dev/documentation/bitkub_client/latest/)
@@ -29,23 +20,23 @@ Official Documentation of Bikub public API can be found [here](https://github.co
 Getting tickers
 
 ```dart
- //Initialize the client
- var client = BitkubClient();
- //Get the tickers
- var tickers = await client.getTickers(symbol: BkSymbols.THB_BTC);
- //...
- print(tickers.tickerList.first.lastPrice);
+//Initialize the client
+var client = BitkubClient();
+//Get the tickers
+var tickers = await client.getTickers(symbol: BkSymbols.THB_BTC);
+//...
+print(tickers.tickerList.first.lastPrice);
 ```
 
 Getting ask,bid orders
 
 ```dart
- //Initialize the client
- var client = BitkubClient();
- //Get the orders
- var orders = await client.getOpenOrders(BkSymbols.THB_BTC);
- //...
- print(orders.asks.first.quoteRate);
+//Initialize the client
+var client = BitkubClient();
+//Get the orders
+var orders = await client.getOpenOrders(BkSymbols.THB_BTC);
+//...
+print(orders.asks.first.quoteRate);
 ```
 
 Connecting to trade stream
@@ -57,10 +48,27 @@ var socketClient = BitkubSocketClient();
 var tradeStream = socketClient.connectToTradeStream([BkSymbols.THB_BTC]);
 //Listen to matchedOrder change
 tradeStream.listen((matchedOrder) {
-	//...
-    print(matchedOrder);
+  //...
+  print(matchedOrder);
 });
 ```
+
+Accessing the full name of symbols
+
+```dart
+var fullName = BkSymbols.THB_ETH.fullName;
+print(fullName);
+//Ethereum
+```
+
+## Milestone
+
+- [x] Non-secure endpoints
+- [x] WebSocket APIs as streams
+- [x] Full examples
+- [ ] Migrate to Null-safety
+- [ ] Secure endpoints using authentication
+
 ## Contribution
 
 Before creating a new issues please read the official Bitkub API first for Breaking Changes.

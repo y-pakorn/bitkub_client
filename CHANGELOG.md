@@ -1,7 +1,16 @@
+## 0.2.4
+
+- Add SCRT token
+- Add full name property on BkSymbol
+- Add getAllSymbols
+- Add getTrades
+
 ## 0.2.3
+
 - dependency bug fixes
 
 ## 0.2.2
+
 - Add BitkubSocketClient
 - Refactor some code
 - Add more documentation text
