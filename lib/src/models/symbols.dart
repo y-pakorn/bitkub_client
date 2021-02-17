@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 class BkSymbolList {
   const BkSymbolList({
     this.error,
+    @required this.notIncluded,
     @required this.symbols,
   }) : assert(symbols != null);
 
@@ -19,7 +20,11 @@ class BkSymbolList {
   final List<BkSymbolInfo> symbols;
 
   ///Return true if has no error
-  bool get isOk => error == null || error != 0;
+  bool get isOk => error == null || error == 0;
+
+  ///Return list of symbols that is not included in [symbols]
+  ///Possibly because it's enum is not in [BkSymbols]
+  final List<String> notIncluded;
 
   factory BkSymbolList.fromJson(String str) =>
       BkSymbolList._fromMap(json.decode(str));
@@ -30,6 +35,13 @@ class BkSymbolList {
             .map((e) => BkSymbolInfo._fromMap(e))
             .toList()
               ..removeWhere((e) => e == null),
+        notIncluded: (json['result'] as List<dynamic>)
+                .where((e) => !BkSymbols.values
+                    .map((e) => e.symbolString)
+                    .contains((e as Map<String, dynamic>)['symbol']))
+                .map((e) => e['symbol'].toString())
+                .toList() ??
+            [],
       );
 }
 
@@ -74,6 +86,7 @@ enum BkSymbols {
   THB_BNB,
   THB_BSV,
   THB_BTC,
+  THB_CTXC,
   THB_CVC,
   THB_DAI,
   THB_DOGE,
@@ -142,6 +155,9 @@ extension BkSymbolsExtension on BkSymbols {
         break;
       case BkSymbols.THB_BTC:
         return 'Bitcoin';
+        break;
+      case BkSymbols.THB_CTXC:
+        return 'Cortex';
         break;
       case BkSymbols.THB_CVC:
         return 'Civic';
@@ -246,6 +262,7 @@ const bkSymbolsValue = EnumValues({
   'THB_BNB': BkSymbols.THB_BNB,
   'THB_BSV': BkSymbols.THB_BSV,
   'THB_BTC': BkSymbols.THB_BTC,
+  'THB_CTXC': BkSymbols.THB_CTXC,
   'THB_CVC': BkSymbols.THB_CVC,
   'THB_DAI': BkSymbols.THB_DAI,
   'THB_DOGE': BkSymbols.THB_DOGE,
