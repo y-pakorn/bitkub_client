@@ -1,7 +1,7 @@
 name: bitkub_client
 description: >-
   A well-documented client library for accessing Bitkub public APIs, works for Dart and Flutter.
-version: 0.2.5
+version: 0.2.6
 homepage: https://github.com/y-pakorn/bitkub_client
 
 environment:
@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   #http: '>=0.12.2 <=0.13.0'
-  http: ^0.12.2
+  http: '>=0.12.0 <=0.12.2'
   meta: ^1.2.4
   web_socket_channel: '>=1.0.0 <=1.2.0'
 

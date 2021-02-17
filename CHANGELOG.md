@@ -1,3 +1,9 @@
+## 0.2.6
+
+- Add CTXC token
+- Remove deprecated function as they can be used now
+- Bug fixes
+
 ## 0.2.5
 
 - Add SCRT token
