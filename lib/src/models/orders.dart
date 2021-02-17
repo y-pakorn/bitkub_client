@@ -21,7 +21,7 @@ class BkOpenOrders {
   final List<BkOrder> asks;
 
   ///Return true if has no error
-  bool get isOk => error == null || error != 0;
+  bool get isOk => error == null || error == 0;
 
   factory BkOpenOrders.fromJson(String str) =>
       BkOpenOrders._fromMap(json.decode(str));

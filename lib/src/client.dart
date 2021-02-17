@@ -21,10 +21,8 @@ class BitkubClient {
 
   ///Get endpoint status.
   ///When status is not ok, it is highly recommended to wait until the status changes back to ok.
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Return BKStatus object.
-  @Deprecated('Not working but existed in doc.')
   Future<BkStatus> getStatus() async {
     const ENDPOINT = '/status';
 
@@ -38,10 +36,8 @@ class BitkubClient {
   }
 
   ///Get server timestamp.
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Return DateTime object.
-  @Deprecated('Not working but existed in doc.')
   Future<DateTime> getServerTimestamp() async {
     const ENDPOINT = '/servertime';
 
@@ -49,17 +45,15 @@ class BitkubClient {
     final response = await _httpWrapper(finalUri);
 
     if (response != null) {
-      return DateTime.fromMillisecondsSinceEpoch(response * 1000);
+      return DateTime.fromMillisecondsSinceEpoch(jsonDecode(response) * 1000);
     }
     return null;
   }
 
   ///Get all available symbols.
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Ex.
   ///   var symbols = bitkubClient.getAllSymbols();
-  @Deprecated('Not working but existed in doc.')
   Future<BkSymbolList> getAllSymbols() async {
     const ENDPOINT = '/market/symbols';
 
@@ -74,11 +68,9 @@ class BitkubClient {
 
   ///Get list of trades history for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Ex.
   ///   var openOrders = bitkubClient.getTrades(BkSymbols.THB_BTC);
-  @Deprecated('Not working but existed in doc.')
   Future<BkTradeList> getTrades(BkSymbols symbol, {int limit = 30}) async {
     const ENDPOINT = '/market/trades';
     final queryStringSymbol = '?sym=${symbol.symbolString}';
@@ -110,11 +102,9 @@ class BitkubClient {
 
   ///Get list of open orders containing only asks for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Ex.
   ///   var openOrders = bitkubClient.getSellOrders(BkSymbols.THB_BTC);
-  @Deprecated('Not working but existed in doc')
   Future<List<BkOrder>> getSellOrders(BkSymbols symbol,
       {int limit = 30}) async {
     const ENDPOINT = '/market/asks';
@@ -125,21 +115,18 @@ class BitkubClient {
 
     final response = await _httpWrapper(finalUrl);
     if (response != null) {
-      return json
-          .decode(response)['result']
+      return (json.decode(response)['result'] as List<dynamic>)
           .map((e) => BkOrder.fromList(e))
           .toList();
     }
-    return null;
+    return [];
   }
 
   ///Get list of open orders containing only bids for a specific [symbol] and query limit of [limit]
   ///Default [limit] is 30
-  /// ### This class is deprecated, Not working but existed in Bitkub API Documentation
   ///
   ///Ex.
   ///   var openOrders = bitkubClient.getSellOrders(BkSymbols.THB_BTC);
-  @Deprecated('Not working but existed in doc')
   Future<List<BkOrder>> getBuyOrders(BkSymbols symbol, {int limit = 30}) async {
     const ENDPOINT = '/market/bids';
     final queryStringSymbol = '?sym=${symbol.symbolString}';
@@ -149,12 +136,11 @@ class BitkubClient {
 
     final response = await _httpWrapper(finalUrl);
     if (response != null) {
-      return json
-          .decode(response)['result']
+      return (json.decode(response)['result'] as List<dynamic>)
           .map((e) => BkOrder.fromList(e))
           .toList();
     }
-    return null;
+    return [];
   }
 
   ///Get list of open orders containing bids and asks for a specific [symbol] and query limit of [limit]

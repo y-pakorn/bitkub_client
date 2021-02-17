@@ -19,7 +19,7 @@ class BkTickerList {
       tickerList.firstWhere((e) => e.symbol == symbol);
 
   ///Return true if has no error
-  bool get isOk => error == null || error != 0;
+  bool get isOk => error == null || error == 0;
 
   factory BkTickerList.fromJson(String str) =>
       BkTickerList._fromMap(json.decode(str));

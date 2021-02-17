@@ -22,7 +22,7 @@ class BkDepth {
   final List<BkDepthValue> asks;
 
   ///Return true if has no error
-  bool get isOk => error == null || error != 0;
+  bool get isOk => error == null || error == 0;
 
   factory BkDepth.fromJson(String str) => BkDepth._fromMap(json.decode(str));
 

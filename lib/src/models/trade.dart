@@ -18,14 +18,14 @@ class BkTradeList {
   final List<BkTradeInfo> trades;
 
   ///Return true if has no error
-  bool get isOk => error == null || error != 0;
+  bool get isOk => error == null || error == 0;
 
   factory BkTradeList.fromJson(String str) =>
       BkTradeList._fromMap(json.decode(str));
 
   factory BkTradeList._fromMap(Map<String, dynamic> json) => BkTradeList(
         error: json['error'],
-        trades: (json['result']['bids'] as List<dynamic>)
+        trades: (json['result'] as List<dynamic>)
             .map((e) => BkTradeInfo._fromList(e))
             .toList()
               ..removeWhere((e) => e == null),

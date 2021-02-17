@@ -18,9 +18,9 @@ class BkStatus {
 
   factory BkStatus.fromJson(String str) => BkStatus._fromList(json.decode(str));
 
-  factory BkStatus._fromList(List<Map<String, dynamic>> list) => BkStatus(
+  factory BkStatus._fromList(List<dynamic> list) => BkStatus(
         BkEndpointStatus._fromMap(list[0]),
-        BkEndpointStatus._fromMap(list[0]),
+        BkEndpointStatus._fromMap(list[1]),
       );
 }
 
@@ -45,7 +45,7 @@ class BkEndpointStatus {
   final String message;
 
   ///Return `true` if [status] is 'Ok'
-  bool get isOk => status == 'Ok';
+  bool get isOk => status == 'Ok' || status == 'ok';
 
   //factory BkEndpointStatus._fromJson(String str) =>
   //BkEndpointStatus._fromMap(json.decode(str));
