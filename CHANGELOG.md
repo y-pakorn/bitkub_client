@@ -1,3 +1,7 @@
+## 0.2.7
+
+- Bug fixes
+
 ## 0.2.6
 
 - Add CTXC token

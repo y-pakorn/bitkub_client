@@ -94,6 +94,7 @@ enum BkSymbols {
   THB_ETH,
   THB_EVX,
   THB_GNT,
+  THB_GLM,
   THB_INF,
   THB_IOST,
   THB_JFIN,
@@ -178,6 +179,9 @@ extension BkSymbolsExtension on BkSymbols {
         return 'Everex';
         break;
       case BkSymbols.THB_GNT:
+        return 'Golem Network Token';
+        break;
+      case BkSymbols.THB_GLM:
         return 'Golem Network Token';
         break;
       case BkSymbols.THB_INF:
@@ -270,6 +274,7 @@ const bkSymbolsValue = EnumValues({
   'THB_ETH': BkSymbols.THB_ETH,
   'THB_EVX': BkSymbols.THB_EVX,
   'THB_GNT': BkSymbols.THB_GNT,
+  'THB_GLM': BkSymbols.THB_GLM,
   'THB_INF': BkSymbols.THB_INF,
   'THB_IOST': BkSymbols.THB_IOST,
   'THB_JFIN': BkSymbols.THB_JFIN,
