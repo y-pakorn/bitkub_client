@@ -36,9 +36,9 @@ class BkSymbolList {
             .toList()
               ..removeWhere((e) => e == null),
         notIncluded: (json['result'] as List<dynamic>)
-                .where((e) => !BkSymbols.values
+                .where((e) => !(BkSymbols.values
                     .map((e) => e.symbolString)
-                    .contains((e as Map<String, dynamic>)['symbol']))
+                    .contains((e as Map<String, dynamic>)['symbol'])))
                 .map((e) => e['symbol'].toString())
                 .toList() ??
             [],
@@ -117,6 +117,12 @@ enum BkSymbols {
   THB_XRP,
   THB_ZIL,
   THB_ZRX,
+  THB_MKR,
+  THB_COMP,
+  THB_DON,
+  THB_YFI,
+  THB_UNI,
+  THB_AAVE,
 }
 
 ///Extensions on BkSymbols
@@ -250,8 +256,24 @@ extension BkSymbolsExtension on BkSymbols {
       case BkSymbols.THB_ZRX:
         return '0x';
         break;
-      default:
-        return name;
+      case BkSymbols.THB_MKR:
+        return 'MakerDAO';
+        break;
+      case BkSymbols.THB_COMP:
+        return 'Compound';
+        break;
+      case BkSymbols.THB_DON:
+        return 'DEONEX';
+        break;
+      case BkSymbols.THB_YFI:
+        return 'yearn.finance';
+        break;
+      case BkSymbols.THB_UNI:
+        return 'Uniswap';
+        break;
+      case BkSymbols.THB_AAVE:
+        return 'Aave';
+        break;
     }
   }
 }
@@ -297,4 +319,10 @@ const bkSymbolsValue = EnumValues({
   'THB_XRP': BkSymbols.THB_XRP,
   'THB_ZIL': BkSymbols.THB_ZIL,
   'THB_ZRX': BkSymbols.THB_ZRX,
+  'THB_MKR': BkSymbols.THB_MKR,
+  'THB_COMP': BkSymbols.THB_COMP,
+  'THB_DON': BkSymbols.THB_DON,
+  'THB_YFI': BkSymbols.THB_YFI,
+  'THB_UNI': BkSymbols.THB_UNI,
+  'THB_AAVE': BkSymbols.THB_AAVE,
 });

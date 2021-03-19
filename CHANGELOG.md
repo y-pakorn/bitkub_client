@@ -1,3 +1,7 @@
+## 0.2.8
+
+- Add MKR,COMP,DON,YFI,UNI,AAVE Tokens
+
 ## 0.2.7
 
 - Bug fixes
